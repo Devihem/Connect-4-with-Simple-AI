@@ -382,4 +382,3 @@ while not winner_flag and not end_game_flag:
         continue
 
 print('\n\nThank you for playing Connect-4! Goodbye!')
-print('test license')

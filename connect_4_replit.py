@@ -14,6 +14,7 @@ If no player wins and the board is full, the game is considered a draw.
 """
 
 import re
+import os
 
 
 # First user input possible for selecting game mode. The function return 'C' or 'Any input'
@@ -35,6 +36,7 @@ def game_mod(user_mode_input: str):
     # if the selected mode is Custom the user choose one by one the parameters.
     if user_mode_input.upper() == 'C':
 
+        cls()
         # Rows input with try/except. If input is incorrect the error is raised and the input is repeated.
         while True:
             try:
@@ -46,9 +48,11 @@ def game_mod(user_mode_input: str):
                     raise ValueError
 
             except ValueError:
+                cls()
                 print('\nIncorrect input !\nExpected input - integer number in the given range [ 1 - 99 ]')
                 continue
 
+        cls()
         # Columns input with try/except. If input is incorrect the error is raised and the input is repeated.
         while True:
             try:
@@ -60,9 +64,11 @@ def game_mod(user_mode_input: str):
                     raise ValueError
 
             except ValueError:
+                cls()
                 print('\nIncorrect input !\nExpected input - integer number in the given range [ 1 - 99 ]')
                 continue
 
+        cls()
         # Player count input with try/except. If input is incorrect the error is raised and the input is repeated.
         while True:
             try:
@@ -73,6 +79,7 @@ def game_mod(user_mode_input: str):
                 else:
                     raise ValueError
             except ValueError:
+                cls()
                 print('\nIncorrect input !\nExpected input - integer number in the given range [ 1 - 6 ]')
                 continue
 
@@ -95,29 +102,35 @@ def players_name_and_color(new_players_count: int, user_mode_input: str):
     # If Custom mode is selected
     if user_mode_input.upper() == 'C':
 
+        cls()
         # While loop until the selected players count is the same as the dictionary keys ( Players )
         while len(players_dictionary.keys()) < new_players_count:
-            new_player_name = input('\nWelcome, enter your name, between [4-20] characters from [ a-z, A-Z, 0-9 , _ ]'
-                                    '\nEnter Your name => : ')
+            new_player_name = input(
+                '\nWelcome new player, please enter your name, between [4-20] characters from [ a-z, A-Z, 0-9 , _ ]'
+                '\nEnter Your name => : ')
 
             # Username validation in 4 steps - Valid format 4-20 - characters [a-z, A-Z, 0-9, _] and to be unique:
             # Check_1 - if name is empty
             if not new_player_name:
+                cls()
                 print('\nPlayer name cannot be empty !')
                 continue
 
             # Check_2 - if name is not within correct length
             if len(new_player_name) < 4 or len(new_player_name) > 20:
+                cls()
                 print('\nPlayer name length not in range [ 4 - 20 ] !')
                 continue
 
             # Check_3 - if name contain not allowed characters, (Regex check for all symbols except [^_a-zA-Z0-9] )
             if re.findall(r'\W+', new_player_name):
-                print('\nPlayer name contains not allowed characters')
+                cls()
+                print('\nPlayer name contains not allowed characters !')
                 continue
 
             # Check_4 if name already exist return user to the player name-input, until correct name is written.
             if new_player_name in players_dictionary.keys():
+                cls()
                 # For better visualisation print the error and the usernames that already exist
                 print(f'\nThis Player name already exist !'
                       f'\nPlayers names that already used: {", ".join(players_dictionary.keys())}')
@@ -132,16 +145,18 @@ def players_name_and_color(new_players_count: int, user_mode_input: str):
 
                 # Color index input - try/except. If input is incorrect the error is raised and the input is repeated.
                 try:
-                    player_color = int(input('Please select your color !\nColor number => : '))
+                    player_color = int(input(f'Please select your color {new_player_name} !\nColor number => : '))
                     if 0 < player_color <= len(colors_list):
 
                         players_dictionary[new_player_name] = colors_list.pop(player_color - 1)
+                        cls()
                         print(f'\n{players_dictionary[new_player_name][0:7]} {new_player_name}\033[0m '
                               f'You are set and ready !')
                         break
                     else:
                         raise ValueError
                 except ValueError:
+                    cls()
                     print(f'Incorrect input ! '
                           f'Expected input - integer number in the given range [ 1 - {len(colors_list)} ]')
                     continue
@@ -186,6 +201,8 @@ def player_token_placement(p_symbol: str, p_name: str, free_columns_index: list)
 
         # if error occurred print error message and show the free columns for placement
         except ValueError:
+            cls()
+            board_print(board, columns_print_for_representation, number_of_cols)
             print(f'\nIncorrect input !'
                   f'\nExpected input - Integer number. One, from the free columns indexes {free_columns_index}')
 
@@ -262,7 +279,13 @@ def another_game():
         elif do_you_want_new_game.upper() == 'NO':
             return False
         else:
+            cls()  # Clean Terminal
             print(f'\nIncorrect input !')
+
+
+# Clear the terminal log for Windows and Linux ( added for replit )
+def cls():
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 
 # Print - WELCOME
@@ -279,7 +302,7 @@ def starting_print():
 # Print - GAME BOARD
 def board_print(matrix_board: list, columns_print: list, matrix_cols: int):
     # Spacing from other prints
-    print('\n\n\n\n\n\n\n')
+    print('\n')
 
     # Top frame
     print('┌─' + '───┬─' * (matrix_cols - 1) + '───┐')
@@ -336,6 +359,8 @@ while not winner_flag and not end_game_flag:
     # Using for-loop to rotate players turns.
     for player_name, players_symbol in players_dict.items():
 
+        cls()  # Clean Terminal
+
         # Printing the gaming board
         board_print(board, columns_print_for_representation, number_of_cols)
 
@@ -356,6 +381,8 @@ while not winner_flag and not end_game_flag:
 
         # if any of the flag is raised stop the loop
         if winner_flag or end_game_flag:
+
+            cls()  # Clean Terminal
 
             # Print the final state of the board
             board_print(board, columns_print_for_representation, number_of_cols)
@@ -381,4 +408,6 @@ while not winner_flag and not end_game_flag:
         board, columns_print_for_representation = board_creating(number_of_rows, number_of_cols)
         continue
 
-print('\n\nThank you for playing Connect-4 made by me! Goodbye!')
+cls()  # Clean Terminal
+starting_print()
+print('\n   Thank you for playing Connect-4 made by me! Goodbye!')

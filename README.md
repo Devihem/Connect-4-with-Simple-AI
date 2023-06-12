@@ -4,6 +4,8 @@ This is a basic project in python, that recreates the game Connect 4.
 
 Can be tested on replit [PLAY](https://replit.com/@IvayloStoyanov/Connect-4) or in personal terminal.
 
+The main version is Connect_4_replit.py ( The other one is with new lines space for visualisation in PyCharm )
+
 ---
 
 📓 **Game Rules:**

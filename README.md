@@ -20,10 +20,16 @@ The main version is Connect_4_replit.py  ( The other one is with new lines space
 
 5 - The starter of the previous game goes second on the next game.
 
-Possible modes and some extra stuff:
+---
+
+⭐ **Possible modes and some extra stuff:**
+
 Defualt ( for quick games of 2 players )
+
 Custome  Up to 6 players on Custom Board
+
 Players have personal color
+
 Have option for replay.
 
 ---

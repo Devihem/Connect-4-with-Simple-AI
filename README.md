@@ -2,7 +2,7 @@
 
 This is a basic project in python, that recreates the game Connect 4.
 
-Can be tested on replit [PLAY](https://replit.com/@IvayloStoyanov/Connect-4) or in personal terminal.
+Can be tested on replit [PLAY](https://replit.com/@IvayloStoyanov/Connect-4?v=1) or in personal terminal.
 
 The main version is Connect_4_replit.py  ( The other one is with new lines spaces for visualisation in PyCharm )
 
@@ -26,7 +26,7 @@ The main version is Connect_4_replit.py  ( The other one is with new lines space
 
 Defualt ( for quick games of 2 players )
 
-Custome  Up to 6 players on Custom Board
+Custom Up to 6 players on Custom Board
 
 Players have personal color
 

@@ -14,15 +14,19 @@ If no player wins and the board is full, the game is considered a draw.
 """
 
 import re
+import random
+import copy
 
 
-# First user input possible for selecting game mode. The function return 'C' or 'Any input'
+# First user input possible for selecting game mode. The function return 'P' or 'Any input'
 def choosing_game_play_mode():
-    user_choice = input('\n┌─-----------------Choose-a-gameplay-mode-----------------─┐'
-                        '\n│ Default - Two Players, Standard Board                    │'
-                        '\n│ Custom  - Two - Six Players, Custom Board                │'
-                        '\n└─--------------------------------------------------------─┘\n'
-                        '\n Type Any-Key for Default or "C" for Custom and Press ENTER to continue :'
+    user_choice = input('\n┌─-----------------Choose-a-gameplay-mode----------------─┐'
+                        '\n│ Versus AI     - One Player, Standard Board, AI          │'
+                        '\n│ Normal        - Two Players, Standard Board             │'
+                        '\n│ Party         - Two - Six Players, Custom Board         │'
+                        '\n└─-------------------------------------------------------─┘\n'
+                        '\n Type "AI" to play against Bot, type "N" for normal match or'
+                        ' "P" for Party match and Press ENTER to continue :'
                         '\n => :  ')
     return user_choice
 
@@ -32,8 +36,8 @@ def game_mod(user_mode_input: str):
     #  default values (Grid 6 x 7 ,  2 Players)
     custom_rows, custom_cols, custom_players = 6, 7, 2
 
-    # if the selected mode is Custom the user choose one by one the parameters.
-    if user_mode_input.upper() == 'C':
+    # if the selected mode is Party the user choose one by one the parameters.
+    if user_mode_input.upper() == 'P':
 
         # Rows input with try/except. If input is incorrect the error is raised and the input is repeated.
         while True:
@@ -84,7 +88,7 @@ def game_mod(user_mode_input: str):
         return custom_rows, custom_cols, custom_players
 
 
-# If game mode is Custom function return players name and color selected by users , otherwise return default values
+# If game mode is Party function return players name and color selected by users , otherwise return default values
 def players_name_and_color(new_players_count: int, user_mode_input: str):
     players_dictionary = {}
 
@@ -93,7 +97,7 @@ def players_name_and_color(new_players_count: int, user_mode_input: str):
                    '\033[1;34m██\033[0m', '\033[1;35m██\033[0m', '\033[1;37m██\033[0m']
 
     # If Custom mode is selected
-    if user_mode_input.upper() == 'C':
+    if user_mode_input.upper() == 'P':
 
         # While loop until the selected players count is the same as the dictionary keys ( Players )
         while len(players_dictionary.keys()) < new_players_count:
@@ -145,11 +149,16 @@ def players_name_and_color(new_players_count: int, user_mode_input: str):
                     print(f'Incorrect input ! '
                           f'Expected input - integer number in the given range [ 1 - {len(colors_list)} ]')
                     continue
-    else:
+
+    elif user_mode_input.upper() == 'N':
         # Return Default Player 1  and Player 2 information for quick games.
         players_dictionary['Player_1'] = colors_list.pop(0)  # Red Current Index
         players_dictionary['Player_2'] = colors_list.pop(2)  # BLue Current Index
-        '\033[1;31m██\033[0m'
+
+    elif user_mode_input.upper() == 'AI':
+        # Return Default Player 1  and Player 2 - AI information for quick games.
+        players_dictionary['Player_1'] = colors_list.pop(0)  # Red Current Index
+        players_dictionary['Player_2_AI'] = colors_list.pop(2)  # BLue Current Index
 
     # When all the data is fill out correctly return dictionary in format (Player-name : [Color_code + symbol])
     return players_dictionary
@@ -169,8 +178,11 @@ def check_free_columns(matrix_board: list, matrix_cols: int):
 
 
 # Take the user input and check it if is valid, return correct index for token place
-def player_token_placement(p_symbol: str, p_name: str, free_columns_index: list):
+def player_token_placement(p_symbol: str, p_name: str, free_columns_index: list, matrix):
     #  Repeating the player input if it's incorrect or the index is wrong
+    if p_name == "Player_2_AI":
+        return monte_carlo_ai_placement(matrix)
+
     while True:
 
         try:
@@ -310,11 +322,34 @@ def draw_print():
     )
 
 
+#######################################################################################################################
+#######################################################################################################################
+def monte_carlo_ai_placement(matrix):
+    ai_placement = 0
+    ai_color = '\033[1;33m██\033[0m'
+
+    best_position = 0
+    while True:
+        mc_matrix = copy.deepcopy(matrix)
+
+        free_cols = check_free_columns(mc_matrix, len(mc_matrix[0]))
+        print(free_cols)
+        break
+
+    print(*matrix, sep='\n')
+    [print(''.join(x)) for x in matrix]
+
+    return ai_placement
+
+
+#######################################################################################################################
+#######################################################################################################################
 #  Welcome, Print with script name.
 starting_print()
 
 # User choose - Gameplay mode , Custom or Default
-gameplay_mode = choosing_game_play_mode()
+# gameplay_mode = choosing_game_play_mode()
+gameplay_mode = "AI"
 
 # Common variables for creating the game board and saving players' info.
 number_of_rows, number_of_cols, players = game_mod(gameplay_mode)
@@ -343,7 +378,7 @@ while not winner_flag and not end_game_flag:
         free_columns = check_free_columns(board, number_of_cols)
 
         # Player choose where to place the token ( in witch column )
-        column_to_place = player_token_placement(players_symbol, player_name, free_columns)
+        column_to_place = player_token_placement(players_symbol, player_name, free_columns, board)
 
         # Placing the color token in the board
         board, r_c_last_token = place_token(board, number_of_rows, column_to_place, players_symbol)

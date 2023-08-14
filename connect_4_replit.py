@@ -28,8 +28,8 @@ def choosing_game_play_mode():
                             '\n│ Normal        - Two Players, Standard Board             │'
                             '\n│ Party         - Two - Six Players, Custom Board         │'
                             '\n└─-------------------------------------------------------─┘\n'
-                            '\n Type "AI" to play against Bot, type "N" for normal match or'
-                            ' "P" for Party match and Press ENTER to continue :'
+                            '\n Type "AI" to play against Bot, type "N" for normal match'
+                            '\n   or "P" for Party match and Press ENTER to continue :'
                             '\n => :  ')
         if user_choice.upper() in game_modes_list:
             break
@@ -199,7 +199,6 @@ def check_free_columns(matrix_board: list, matrix_cols: int):
 
 # Take the user input and check it if is valid, return correct index for token place
 def player_token_placement(p_symbol: str, p_name: str, free_columns_index: list, matrix):
-
     # Using MCST
     if p_name == "Player_2_AI":
         return monte_carlo_ai_placement(matrix)
@@ -316,7 +315,8 @@ def monte_carlo_ai_placement(matrix):
     first_move_loc = int()
 
     # Number of random played games - simulation
-    for game_number in range(100):
+    number_of_simulations = 200
+    for game_number in range(number_of_simulations):
         mc_matrix = copy.deepcopy(matrix)
         for counter in range(0, 100):
 

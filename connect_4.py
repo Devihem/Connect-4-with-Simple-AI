@@ -20,15 +20,20 @@ import copy
 
 # First user input possible for selecting game mode. The function return 'P' or 'Any input'
 def choosing_game_play_mode():
-    user_choice = input('\n┌─-----------------Choose-a-gameplay-mode----------------─┐'
-                        '\n│ Versus AI     - One Player, Standard Board, AI          │'
-                        '\n│ Normal        - Two Players, Standard Board             │'
-                        '\n│ Party         - Two - Six Players, Custom Board         │'
-                        '\n└─-------------------------------------------------------─┘\n'
-                        '\n Type "AI" to play against Bot, type "N" for normal match or'
-                        ' "P" for Party match and Press ENTER to continue :'
-                        '\n => :  ')
-    return user_choice
+    game_modes_list = ["AI", "N", "P"]
+    while True:
+        user_choice = input('\n┌─-----------------Choose-a-gameplay-mode----------------─┐'
+                            '\n│ Versus AI     - One Player, Standard Board, AI          │'
+                            '\n│ Normal        - Two Players, Standard Board             │'
+                            '\n│ Party         - Two - Six Players, Custom Board         │'
+                            '\n└─-------------------------------------------------------─┘\n'
+                            '\n Type "AI" to play against Bot, type "N" for normal match or'
+                            ' "P" for Party match and Press ENTER to continue :'
+                            '\n => :  ')
+        if user_choice.upper() in game_modes_list:
+            break
+        print("\n\n\n\n\n\n\n\n\n\n")
+    return user_choice.upper()
 
 
 # Receiving user input for the game mode. Return how many rows, columns and players will teh game have.
@@ -322,34 +327,65 @@ def draw_print():
     )
 
 
-#######################################################################################################################
-#######################################################################################################################
+# Simple - MCTS - Model
 def monte_carlo_ai_placement(matrix):
-    ai_placement = 0
-    ai_color = '\033[1;33m██\033[0m'
+    player_token = '\033[1;31m██\033[0m'
+    ai_token = '\033[1;34m██\033[0m'
 
-    best_position = 0
-    while True:
+    all_first_moves_dict = {}
+    first_move_loc = int()
+
+    # Number of random played games - simulation
+    for game_number in range(100):
         mc_matrix = copy.deepcopy(matrix)
+        for counter in range(0, 100):
 
-        free_cols = check_free_columns(mc_matrix, len(mc_matrix[0]))
-        print(free_cols)
-        break
+            free_cols = check_free_columns(mc_matrix, number_of_cols)
+            random_place = random.choice(free_cols) - 1
 
-    print(*matrix, sep='\n')
-    [print(''.join(x)) for x in matrix]
+            if counter == 0:
+                if random_place not in all_first_moves_dict:
+                    all_first_moves_dict[random_place] = 0
+                first_move_loc = random_place
 
-    return ai_placement
+            if counter % 2 == 0:
+                player_symbol = ai_token
+            else:
+                player_symbol = player_token
+
+            # AI Place random token
+            mc_matrix, mc_r_c_last_token = place_token(mc_matrix, number_of_rows, random_place, player_symbol)
+
+            # Flags for Winner or Draw Game
+            mc_winner_flag = winner_check(mc_matrix, player_symbol, mc_r_c_last_token, number_of_rows, number_of_cols)
+            mc_end_game_flag = False if len(check_free_columns(mc_matrix, number_of_cols)) > 0 else True
+
+            # if any of the flag is raised stop the loop
+            if mc_winner_flag or mc_end_game_flag:
+
+                # Rewarding system
+                # State Winner
+                if mc_winner_flag:
+                    if player_symbol == ai_token:
+                        all_first_moves_dict[first_move_loc] += 6
+                    elif player_symbol == player_token:
+                        all_first_moves_dict[first_move_loc] -= 4
+
+                # State Draw
+                elif mc_end_game_flag:
+                    all_first_moves_dict[first_move_loc] -= 1
+
+                break
+
+    sorted_all_moves = (sorted(all_first_moves_dict.items(), key=lambda k: (-k[1], k[0])))
+    return sorted_all_moves[0][0]
 
 
-#######################################################################################################################
-#######################################################################################################################
 #  Welcome, Print with script name.
 starting_print()
 
 # User choose - Gameplay mode , Custom or Default
-# gameplay_mode = choosing_game_play_mode()
-gameplay_mode = "AI"
+gameplay_mode = choosing_game_play_mode()
 
 # Common variables for creating the game board and saving players' info.
 number_of_rows, number_of_cols, players = game_mod(gameplay_mode)

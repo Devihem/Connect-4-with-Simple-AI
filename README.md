@@ -5,7 +5,7 @@
 
 
 ---
- ℹ️ **About:**
+📑 **About:**
 
 
 This is a basic project in python, that recreates the game Connect 4.

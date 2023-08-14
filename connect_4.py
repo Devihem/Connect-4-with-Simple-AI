@@ -282,51 +282,6 @@ def another_game():
             print(f'\nIncorrect input !')
 
 
-# Print - WELCOME
-def starting_print():
-    print(' _______                                         _     _ '
-          '\n(_______)                               _       | |   (_)'
-          '\n _       ___  ____  ____  _____  ____ _| |_     | |_____ '
-          '\n| |     / _ \\|  _ \\|  _ \\| ___ |/ ___|_   _)    |_____  |'
-          '\n| |____| |_| | | | | | | | ____( (___  | |_           | |'
-          '\n \\______)___/|_| |_|_| |_|_____)\\____)  \\__)          |_|'
-          '\n')
-
-
-# Print - GAME BOARD
-def board_print(matrix_board: list, columns_print: list, matrix_cols: int):
-    # Spacing from other prints
-    print('\n\n\n\n\n\n\n')
-
-    # Top frame
-    print('┌─' + '───┬─' * (matrix_cols - 1) + '───┐')
-
-    # Columns with numbers
-    print('│', ' │ '.join(columns_print), '│')
-
-    # Every mid row and matrix row.
-    [print('├─' + '───┼─' * (matrix_cols - 1) + '───┤\n' + '│ ' + ' │ '.join(x), end=' │\n') for x in matrix_board]
-
-    # Bottom frame
-    print('└─' + '───┴─' * (matrix_cols - 1) + '───┘\n')
-
-
-def winner_print(p_symbol: str, p_name: str):
-    print(
-        f'\n┌─---------CONGRATULATION-----------┐'
-        f'\n            {p_symbol[0:9]} {p_name}\033[0m                    '
-        f'\n└─-------------YOU-WIN--------------┘'
-    )
-
-
-def draw_print():
-    print(
-        f'\n┌─-----------GOOD-GAME-----------┐'
-        f'\n           THIS ROUND IS                    '
-        f'\n└─-------------DRAW--------------┘'
-    )
-
-
 # Simple - MCTS - Model
 def monte_carlo_ai_placement(matrix):
     player_token = '\033[1;31m██\033[0m'
@@ -379,6 +334,51 @@ def monte_carlo_ai_placement(matrix):
 
     sorted_all_moves = (sorted(all_first_moves_dict.items(), key=lambda k: (-k[1], k[0])))
     return sorted_all_moves[0][0]
+
+
+# Print - WELCOME
+def starting_print():
+    print(' _______                                         _     _ '
+          '\n(_______)                               _       | |   (_)'
+          '\n _       ___  ____  ____  _____  ____ _| |_     | |_____ '
+          '\n| |     / _ \\|  _ \\|  _ \\| ___ |/ ___|_   _)    |_____  |'
+          '\n| |____| |_| | | | | | | | ____( (___  | |_           | |'
+          '\n \\______)___/|_| |_|_| |_|_____)\\____)  \\__)          |_|'
+          '\n')
+
+
+# Print - GAME BOARD
+def board_print(matrix_board: list, columns_print: list, matrix_cols: int):
+    # Spacing from other prints
+    print('\n\n\n\n\n\n\n')
+
+    # Top frame
+    print('┌─' + '───┬─' * (matrix_cols - 1) + '───┐')
+
+    # Columns with numbers
+    print('│', ' │ '.join(columns_print), '│')
+
+    # Every mid row and matrix row.
+    [print('├─' + '───┼─' * (matrix_cols - 1) + '───┤\n' + '│ ' + ' │ '.join(x), end=' │\n') for x in matrix_board]
+
+    # Bottom frame
+    print('└─' + '───┴─' * (matrix_cols - 1) + '───┘\n')
+
+
+def winner_print(p_symbol: str, p_name: str):
+    print(
+        f'\n┌─---------CONGRATULATION-----------┐'
+        f'\n            {p_symbol[0:9]} {p_name}\033[0m                    '
+        f'\n└─-------------YOU-WIN--------------┘'
+    )
+
+
+def draw_print():
+    print(
+        f'\n┌─-----------GOOD-GAME-----------┐'
+        f'\n           THIS ROUND IS                    '
+        f'\n└─-------------DRAW--------------┘'
+    )
 
 
 #  Welcome, Print with script name.

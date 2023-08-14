@@ -14,6 +14,7 @@ Can be tested on replit or in personal terminal.
 
 The main version is Connect_4_replit.py  ( The other one is with new lines spaces for visualisation in PyCharm )
 
+- [x] Simple version of Monte Carlo was added !
 ---
 
 📓 **Game Rules:**
@@ -32,9 +33,11 @@ The main version is Connect_4_replit.py  ( The other one is with new lines space
 
 ⭐ **Possible modes and some extra stuff:**
 
-Defualt ( for quick games of 2 players )
+- [x] Versus AI ( 1 Player vs Bot )
 
-Custom Up to 6 players on Custom Board
+Normal ( for quick games of 2 players )
+
+Party Up to 6 players on Custom Board
 
 Players have personal color
 

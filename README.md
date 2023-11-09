@@ -1,50 +1,34 @@
-🕹️ **[CLICK HERE TO PLAY](https://replit.com/@IvayloStoyanov/Connect-4?v=1)**
+<img width="70%" align="center" alt="Tic Tac Toe Photo" src="https://raw.githubusercontent.com/Devihem/Connect-4-with-Simple-AI/master/Background.png" />
 
+‎ ‎
 
-
-
-
----
 📑 **About:**
 
+*‎ ‎ ‎ ‎ ‎ ‎ This is a basic project in python, that recreates the game Connect 4. The project is created as training project in my advanced python course in SoftUni. I go forward from the basic version and try to add more life to it, as adding good visualization in terminal and add more options as different game-play modes for more players at once and  to be more competitive and interesting option to play versus AI-Player ( Simple Monte Carlo  - model ).* 
 
-This is a basic project in python, that recreates the game Connect 4.
+‎ ‎
 
-Can be tested on replit or in personal terminal.
+⭐‎**Additional costumizations :**
 
-The main version is Connect_4_replit.py  ( The other one is with new lines spaces for visualisation in PyCharm )
+- Versus AI ( Human vs AI )
+- Normal ( for quick games of 2 players )
+- Party Up to 6 players on Custom Board
+- Players have personal color
+- Have option for replay.
 
-- [x] Simple version of Monte Carlo was added !
----
+‎ ‎
 
-📓 **Game Rules:**
+⚙️ **Game - Begining and Rules :**
 
-1 - Players must connect 4 of the same colored discs in a row to win. 
+- Players must connect 4 of the same colored discs in a row to win. 
+- Only one piece is played at a time.
+- The game ends when there is a 4-in-a-row or a stalemate.
+- The starter of the previous game goes second on the next game.
 
-2 - Only one piece is played at a time.
+‎ ‎
 
-3 - Players can be on the offensive or defensive.
 
-4 - The game ends when there is a 4-in-a-row or a stalemate.
 
-5 - The starter of the previous game goes second on the next game.
-
----
-
-⭐ **Possible modes and some extra stuff:**
-
-- [x] Versus AI ( 1 Player vs Bot )
-
-Normal ( for quick games of 2 players )
-
-Party Up to 6 players on Custom Board
-
-Players have personal color
-
-Have option for replay.
-
----
-
-Project Demo:
+🖥️  **Preview & Link : [ [CLICK HERE](https://replit.com/@IvayloStoyanov/Connect-4?v=1) 🕹️ ]** 
 
 ![](demo.gif)
